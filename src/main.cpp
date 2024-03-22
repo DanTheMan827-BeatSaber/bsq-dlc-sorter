@@ -2,19 +2,17 @@
 #include "main.hpp"
 
 // GlobalNamespace
-#include "GlobalNamespace/BeatmapLevelsModel.hpp"
 #include "GlobalNamespace/BeatmapLevelPack.hpp"
-#include "GlobalNamespace/BeatmapLevelsEntitlementModel.hpp"
-#include "GlobalNamespace/IBeatmapLevelLoader.hpp"
-#include "GlobalNamespace/PackDefinitionSO.hpp"
+#include "GlobalNamespace/BeatmapLevelsModel.hpp"
+
+// System
 #include "System/Collections/Generic/IEnumerable_1.hpp"
 #include "System/Collections/Generic/IReadOnlyList_1.hpp"
 #include "System/Collections/Generic/List_1.hpp"
 #include "System/Linq/Enumerable.hpp"
-#include <algorithm>
 
-// UnitEngine
-#include "UnityEngine/GameObject.hpp"
+// C++
+#include <algorithm>
 #pragma endregion
 
 #pragma region Usings
@@ -22,12 +20,12 @@ using namespace GlobalNamespace;
 using namespace System::Collections::Generic;
 #pragma endregion
 
-/// @brief Sorts packs with the OST packs first in their original order, followed by DLC sorted by name.
+/// @brief Sorts packs by name Z-A.
 /// @param a The first pack to compare.
 /// @param b The second pack to compare.
 /// @return
 bool dlc_comparer(BeatmapLevelPack* a, BeatmapLevelPack* b) {
-    return std::string(a->___packName) < std::string(b->___packName);
+    return std::string(a->___packName) > std::string(b->___packName);
 }
 
 #pragma region Hook definitions
@@ -39,23 +37,13 @@ MAKE_HOOK_MATCH(BeatmapLevelsModel_CreateAllLoadedBeatmapLevelPacks, &BeatmapLev
     auto list = ListW<BeatmapLevelPack*>::New();
     list->AddRange(self->___dlcBeatmapLevelsRepository->____beatmapLevelPacks->i___System__Collections__Generic__IEnumerable_1_T_());
 
-    // Convert the list to an array so we can sort it
-    auto packs = list->ToArray();
-
     // Sort the packs
-    std::stable_sort(packs->begin(), packs->end(), dlc_comparer);
+    std::stable_sort(list.begin(), list.end(), dlc_comparer);
 
-    // Clear the list
-    list->Clear();
-
-    // Log the new order and add the items back into the list.
-    for (auto pack : packs) {
+    // Log the new order.
+    for (auto pack : list) {
         Logger.debug("{}", pack->___packName);
-        list->Add(pack);
     }
-
-    // Reverse the list because the game loads them in reverse order.
-    list->Reverse();
 
     // Put our list back
     self->___dlcBeatmapLevelsRepository->____beatmapLevelPacks = static_cast<System::Collections::Generic::IReadOnlyList_1<BeatmapLevelPack*>*>(list.convert());
