@@ -29,7 +29,6 @@ bool dlc_comparer(BeatmapLevelPack* a, BeatmapLevelPack* b) {
 }
 
 #pragma region Hook definitions
-// Hooks the MainMenuViewController to hide the musicPackPromoBanner object.
 MAKE_HOOK_MATCH(BeatmapLevelsModel_CreateAllLoadedBeatmapLevelPacks, &BeatmapLevelsModel::CreateAllLoadedBeatmapLevelPacks, BeatmapLevelsRepository*, BeatmapLevelsModel* self) {
     Logger.debug("BeatmapLevelsModel_CreateAllLoadedBeatmapLevelPacks");
 
