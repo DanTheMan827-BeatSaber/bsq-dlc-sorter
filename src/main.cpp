@@ -29,26 +29,22 @@ bool dlc_comparer(BeatmapLevelPack* a, BeatmapLevelPack* b) {
 }
 
 #pragma region Hook definitions
-MAKE_HOOK_MATCH(BeatmapLevelsModel_CreateAllLoadedBeatmapLevelPacks, &BeatmapLevelsModel::CreateAllLoadedBeatmapLevelPacks, BeatmapLevelsRepository*, BeatmapLevelsModel* self) {
-    Logger.debug("BeatmapLevelsModel_CreateAllLoadedBeatmapLevelPacks");
+MAKE_HOOK_MATCH(BeatmapLevelsModel_LoadAllBeatmapLevelPacks, &BeatmapLevelsModel::LoadAllBeatmapLevelPacks, void, BeatmapLevelsModel* self) {
+    Logger.debug("BeatmapLevelsModel_LoadAllBeatmapLevelPacks");
 
-    // Create a list from the beatmapLevelPacks
-    auto list = ListW<BeatmapLevelPack*>::New();
-    list->AddRange(self->___dlcBeatmapLevelsRepository->____beatmapLevelPacks->i___System__Collections__Generic__IEnumerable_1_T_());
+    // Call the original to set up dlcBeatmapLevelsRepository
+    BeatmapLevelsModel_LoadAllBeatmapLevelPacks(self);
+
+    // Store the level packs in a variable to make the code cleaner.
+    auto packs = self->___dlcBeatmapLevelsRepository->____beatmapLevelPacks;
 
     // Sort the packs
-    std::stable_sort(list.begin(), list.end(), dlc_comparer);
+    std::stable_sort(packs.begin(), packs.end(), dlc_comparer);
 
     // Log the new order.
-    for (auto pack : list) {
+    for (auto pack : packs) {
         Logger.debug("{}", pack->___packName);
     }
-
-    // Put our list back
-    self->___dlcBeatmapLevelsRepository->____beatmapLevelPacks = static_cast<System::Collections::Generic::IReadOnlyList_1<BeatmapLevelPack*>*>(list.convert());
-
-    // Call the original method
-    return BeatmapLevelsModel_CreateAllLoadedBeatmapLevelPacks(self);
 }
 #pragma endregion
 
@@ -70,7 +66,7 @@ MOD_EXPORT_FUNC void late_load() {
 
     Logger.info("Installing hooks...");
 
-    INSTALL_HOOK(Logger, BeatmapLevelsModel_CreateAllLoadedBeatmapLevelPacks);
+    INSTALL_HOOK(Logger, BeatmapLevelsModel_LoadAllBeatmapLevelPacks);
 
     Logger.info("Installed all hooks!");
 }
