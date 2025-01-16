@@ -6,6 +6,11 @@ Param(
     [Switch] $help
 )
 
+# Run the hooking script to generate the hooking code
+Push-Location "$PSScriptRoot/.."
+& qpm s make-hooking
+Pop-Location
+
 if ($help -eq $true) {
     Write-Output "`"Build`" - Copiles your mod into a `".so`" or a `".a`" library"
     Write-Output "`n-- Arguments --`n"

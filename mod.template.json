@@ -11,7 +11,7 @@
   "packageVersion": "1.37.1_9895289101",
   "description": "Sorts the DLC packs alphabetically.",
   "dependencies": [],
-  "modFiles": ["${binary}"],
+  "lateModFiles": ["${binary}"],
   "libraryFiles": [],
   "fileCopies": []
 }

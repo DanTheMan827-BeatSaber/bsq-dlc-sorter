@@ -1,5 +1,4 @@
 #include "main.hpp"
-#include "AutoHooks.hpp"
 #include "Logger.hpp"
 #include "modInfo.hpp"
 
@@ -16,8 +15,4 @@ MOD_EXPORT_FUNC void setup(CModInfo& info) {
 /// @return
 MOD_EXPORT_FUNC void late_load() {
     il2cpp_functions::Init();
-
-    Logger.info("Installing hooks...");
-    AutoHooks::InstallHooks();
-    Logger.info("Installed all hooks!");
 }

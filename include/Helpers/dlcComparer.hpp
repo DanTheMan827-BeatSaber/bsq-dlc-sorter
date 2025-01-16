@@ -8,6 +8,6 @@ namespace Helpers {
     using namespace GlobalNamespace;
 
     inline bool dlcComparer(BeatmapLevelPack* a, BeatmapLevelPack* b) {
-        return std::string(a->___packName) > std::string(b->___packName);
+        return std::string(a->packName) > std::string(b->packName);
     }
 }
