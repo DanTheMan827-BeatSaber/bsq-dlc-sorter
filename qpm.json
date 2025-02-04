@@ -6,7 +6,7 @@
   "info": {
     "name": "DlcSorter",
     "id": "DlcSorter",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "url": null,
     "additionalData": {
       "overrideSoName": "libDlcSorter.so",
@@ -78,7 +78,7 @@
     },
     {
       "id": "bs-cordl",
-      "versionRange": "4000.*",
+      "versionRange": "4010.*",
       "additionalData": {}
     },
     {
