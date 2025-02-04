@@ -4,14 +4,15 @@
   "name": "${mod_name}",
   "id": "${mod_id}",
   "coverImage": "cover.png",
-  "modloader": "Scotland2",
   "author": "DanTheMan827",
-  "version": "0.1.4",
+  "version": "${version}",
   "packageId": "com.beatgames.beatsaber",
-  "packageVersion": "1.37.1_9895289101",
+  "packageVersion": "1.37.0_9064817954",
   "description": "Sorts the DLC packs alphabetically.",
   "dependencies": [],
-  "lateModFiles": ["${binary}"],
+  "modFiles": [
+    "${binary}"
+  ],
   "libraryFiles": [],
   "fileCopies": []
 }

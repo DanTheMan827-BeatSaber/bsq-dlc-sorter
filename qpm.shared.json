@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/QuestPackageManager/QPM.Package/refs/heads/main/qpm.shared.schema.json",
   "config": {
     "version": "0.2.0",
     "sharedDir": "shared",
@@ -6,7 +7,7 @@
     "info": {
       "name": "DlcSorter",
       "id": "DlcSorter",
-      "version": "0.1.1",
+      "version": "0.1.4",
       "url": null,
       "additionalData": {
         "overrideSoName": "libDlcSorter.so",
@@ -18,8 +19,19 @@
         "build": [
           "pwsh ./scripts/build.ps1"
         ],
+        "clean": [
+          "pwsh ./scripts/build.ps1 -clean"
+        ],
+        "clean-qmod": [
+          "qpm s clean",
+          "qpm s qmod"
+        ],
         "copy": [
-          "pwsh ./scripts/copy.ps1"
+          "pwsh ./scripts/copy.ps1 $0:?"
+        ],
+        "deepclean": [
+          "pwsh ./scripts/build.ps1 -clean -skipBuild",
+          "qpm clear"
         ],
         "logcat": [
           "pwsh ./scripts/start-logging.ps1"
@@ -28,8 +40,16 @@
           "pwsh ./common-stuff/scripts/make-hooking.ps1"
         ],
         "qmod": [
-          "pwsh ./scripts/build.ps1",
-          "pwsh ./scripts/createqmod.ps1"
+          "qpm s build",
+          "qpm qmod zip"
+        ],
+        "rebuild": [
+          "qpm s deepclean",
+          "qpm s build"
+        ],
+        "rebuild-qmod": [
+          "qpm s deepclean",
+          "qpm s qmod"
         ],
         "restart": [
           "pwsh ./scripts/restart-game.ps1"
@@ -41,9 +61,15 @@
           "pwsh ./scripts/pull-tombstone.ps1"
         ]
       },
-      "qmodIncludeDirs": [],
-      "qmodIncludeFiles": [],
-      "qmodOutput": null
+      "ndk": "^27.0.0",
+      "qmodIncludeDirs": [
+        "./build",
+        "./extern/libs"
+      ],
+      "qmodIncludeFiles": [
+        "./cover.png"
+      ],
+      "qmodOutput": "./DlcSorter.qmod"
     },
     "dependencies": [
       {
@@ -52,51 +78,25 @@
         "additionalData": {}
       },
       {
-        "id": "paper",
-        "versionRange": "^3.6.4",
-        "additionalData": {
-          "private": true
-        }
+        "id": "bs-cordl",
+        "versionRange": "3700.*",
+        "additionalData": {}
       },
       {
-        "id": "bs-cordl",
-        "versionRange": "3701.*",
+        "id": "paper",
+        "versionRange": "^3.7.0",
         "additionalData": {}
       },
       {
         "id": "scotland2",
-        "versionRange": "^0.1.4",
+        "versionRange": "^0.1.6",
         "additionalData": {
-          "includeQmod": false,
-          "private": true
+          "includeQmod": false
         }
       }
     ]
   },
   "restoredDependencies": [
-    {
-      "dependency": {
-        "id": "bs-cordl",
-        "versionRange": "=3701.0.0",
-        "additionalData": {
-          "headersOnly": true,
-          "branchName": "version/v3701_0_0",
-          "compileOptions": {
-            "includePaths": [
-              "include"
-            ],
-            "cppFeatures": [],
-            "cppFlags": [
-              "-DNEED_UNSAFE_CSHARP",
-              "-fdeclspec",
-              "-DUNITY_2021",
-              "-DHAS_CODEGEN"
-            ]
-          }
-        }
-      },
-      "version": "3701.0.0"
-    },
     {
       "dependency": {
         "id": "paper",
@@ -116,6 +116,29 @@
         }
       },
       "version": "3.7.0"
+    },
+    {
+      "dependency": {
+        "id": "bs-cordl",
+        "versionRange": "=3700.0.0",
+        "additionalData": {
+          "headersOnly": true,
+          "branchName": "version/v3700_0_0",
+          "compileOptions": {
+            "includePaths": [
+              "include"
+            ],
+            "cppFeatures": [],
+            "cppFlags": [
+              "-DNEED_UNSAFE_CSHARP",
+              "-fdeclspec",
+              "-DUNITY_2021",
+              "-DHAS_CODEGEN"
+            ]
+          }
+        }
+      },
+      "version": "3700.0.0"
     },
     {
       "dependency": {
