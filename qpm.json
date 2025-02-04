@@ -6,7 +6,7 @@
   "info": {
     "name": "DlcSorter",
     "id": "DlcSorter",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "url": null,
     "additionalData": {
       "overrideSoName": "libDlcSorter.so",
@@ -73,17 +73,17 @@
   "dependencies": [
     {
       "id": "beatsaber-hook",
-      "versionRange": "^5.1.9",
+      "versionRange": "^6.3.0",
       "additionalData": {}
     },
     {
       "id": "bs-cordl",
-      "versionRange": "3700.*",
+      "versionRange": "4000.*",
       "additionalData": {}
     },
     {
-      "id": "paper",
-      "versionRange": "^3.7.0",
+      "id": "paper2_scotland2",
+      "versionRange": "^4.5.0",
       "additionalData": {}
     },
     {
