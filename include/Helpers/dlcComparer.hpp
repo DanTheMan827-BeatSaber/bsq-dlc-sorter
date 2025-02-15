@@ -10,4 +10,4 @@ namespace Helpers {
     inline bool dlcComparer(BeatmapLevelPack* a, BeatmapLevelPack* b) {
         return std::string(a->packName) > std::string(b->packName);
     }
-}
+}  // namespace Helpers

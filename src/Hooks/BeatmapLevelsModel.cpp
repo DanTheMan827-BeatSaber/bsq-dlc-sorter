@@ -1,6 +1,6 @@
-#include "Hooking.hpp"
+#include "autohooks/shared/hooks.hpp"
 #include "Helpers/dlcComparer.hpp"
-#include "Logger.hpp"
+#include "logger.hpp"
 
 // GlobalNamespace
 #include "GlobalNamespace/BeatmapLevelPack.hpp"
